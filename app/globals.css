@@ -16,8 +16,15 @@
   line-height: 28px;
   opacity: 0.8;
   font-weight: 400;
+  padding: 0px !important;
+  margin:  0px !important;
 }
 
 .transition-opacity {
   transition: opacity 0.3s ease-in-out;
+}
+
+h1{
+  padding: 0px !important;
+  margin:  0px !important;
 }

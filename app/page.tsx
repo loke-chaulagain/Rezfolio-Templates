@@ -6,7 +6,14 @@ import { Button } from "@mantine/core";
 import LoadingSkeleton from "./components/LoadingSkeleton";
 import { ICreateResume } from "./types/resume";
 
-export default function Page() {
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
+export default function Page(this: any) {
+  // console.log(process.env.NEXT_PUBLIC_API_URL)
+  const [value, setValue] = useState("");
+  console.log();
+
   const [resumeData, setResumeData] = useState<any>();
   const [inputData, setInputData] = useState<ICreateResume>({
     //Introduction
@@ -135,25 +142,60 @@ export default function Page() {
       </div>
 
       <div className="wrapper lg:w-6/12   ">
+        {/* <ReactQuill
+          theme="snow"
+          value={value}
+          onChange={setValue}
+        /> */}
+
         {resumeData ? (
           <div className="flex flex-col gap-8 ">
             <div className="Introduction______________________Section">
               <div className="flex items-center justify-between">
-                <div
+                {/* <div
                   ref={contentEditableRef}
                   className="global_input text-3xl text-gray-600 font-semibold "
                   contentEditable={editModeActive}
                   onBlur={(e: any) => handleInputChange("section_1_heading", e.target.textContent)}
                   dangerouslySetInnerHTML={{ __html: inputData.section_1_heading }}
-                />
+                /> */}
+
+                {/* <ReactQuill
+                className="w-full"
+                  ref={contentEditableRef}
+                  theme="snow"
+                  value={inputData.section_1_heading}
+                  onChange={(content) => handleInputChange("section_1_heading", content)}
+                /> */}
+
+<ReactQuill 
+ ref={contentEditableRef}
+          // theme={this.state.theme}
+          onChange={(content) => handleInputChange("section_1_heading", content)}
+          value={inputData.section_1_heading}
+          modules={Page.modules}
+          formats={Page.formats}
+          bounds={'.app'}
+          // placeholder={this.props.placeholder}
+         />
+         
               </div>
 
+
               <div
+                  // ref={contentEditableRef}
+                  className="global_input  text-gray-600 p-0 m-0 "
+                  // contentEditable={editModeActive}
+                  // onBlur={(e: any) => handleInputChange("section_1_heading", e.target.textContent)}
+                  dangerouslySetInnerHTML={{ __html: inputData.section_1_heading }}
+                />
+
+              {/* <div
                 className="global_input desc"
                 contentEditable={editModeActive}
                 onBlur={(e: any) => handleInputChange("section_1_1_desc", e.target.textContent)}
                 dangerouslySetInnerHTML={{ __html: inputData.section_1_1_desc }}
-              />
+              /> */}
             </div>
 
             <div className="Experience______________________Section flex flex-col gap-5">
@@ -329,3 +371,46 @@ export default function Page() {
     </section>
   );
 }
+
+
+/* 
+ * Quill modules to attach to editor
+ * See https://quilljs.com/docs/modules/ for complete options
+ */
+Page.modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, 
+     {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'image', 'video'],
+    ['clean'],
+    [{ 'color': ['red','green'] }, { 'background': [] }], 
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  }
+}
+/* 
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+Page.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video'
+]
+
+/* 
+ * PropType validation
+ */
+// Page.propTypes = {
+//   placeholder: PropTypes.string,
+// }
+
+/* 
+ * Render component on page
+ */

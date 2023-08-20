@@ -66,7 +66,6 @@ export class resumeRepository {
   //   }
   // };
 
-
   static get = async (id: number) => {
     try {
       const response = await AxiosInstance.get("");
